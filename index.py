@@ -6,17 +6,18 @@ from pygame.locals import *
 pygame.init()
 pygame.camera.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-# ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI;:,"^`. '
+# ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI^;,":`. '
+ascii = 'MMMMMMMMMMNNNNNNNNNDDDDDDOOOOO++++ooovv-:/.` '
 # ascii = 'MNDO+ov-:/.`    '
-# ascii = 'MO.   '
-ascii = 'MNo.  '
+# ascii = 'MO.'
+# ascii = 'MNo.  '
 size = width, height = screen.get_width(), screen.get_height()
 pixelSize = 20
 sizeWhole = int((width * height) / pixelSize)
 black = (0,0,0)
 white = (255, 255, 255)
 font = pygame.font.SysFont(None, pixelSize)
-offset = 1
+offset = .5
 
 camlist = pygame.camera.list_cameras()
 if camlist:
