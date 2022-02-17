@@ -7,15 +7,16 @@ pygame.init()
 pygame.camera.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 # ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI^;,":`. '
-ascii = 'MMMMMMMMMMNNNNNNNNNDDDDDDOOOOO++++ooovv-:/.` '
-# ascii = 'MNDO+ov-:/.`    '
-# ascii = 'MO.'
-# ascii = 'MNo.  '
+# ascii = 'MMMMMMMMMMNNNNNNNNNDDDDDDOOOOO++++ooovv-:/.` '
+ascii = 'MDON+ov-:/.`    '
+# ascii = '@#o-. '
+# ascii = '\u2593\u00D8\u00B0\u00B7 '
 size = width, height = screen.get_width(), screen.get_height()
-pixelSize = 20
+pixelSize = 10
 sizeWhole = int((width * height) / pixelSize)
-black = (0,0,0)
+black = (0, 0, 0)
 white = (255, 255, 255)
+green = (0, 255, 26)
 font = pygame.font.SysFont(None, pixelSize)
 offset = .5
 
@@ -77,7 +78,7 @@ while 1:
                 r += g + b
                 r /= 3
                 character = ascii[len(ascii) - 1 - int(myMap(r, 0, 256, 0, len(ascii)))]
-                letter = font.render(character, True, white)
+                letter = font.render(character, True, green)
                 screen.blit(letter, (x*offset, y*offset))
             except:
                 # 1
