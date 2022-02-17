@@ -7,7 +7,8 @@ pygame.init()
 pygame.camera.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 # ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI;:,"^`. '
-ascii = 'MNDO+ov-:/.`    '
+# ascii = 'MNDO+ov-:/.`    '
+ascii = 'MO.   '
 size = width, height = screen.get_width(), screen.get_height()
 pixelSize = 10
 sizeWhole = int((width * height) / pixelSize)
