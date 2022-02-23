@@ -19,7 +19,6 @@ white = (255, 255, 255)
 green = (0, 255, 26)
 font = pygame.font.SysFont(None, pixelSize)
 offset = .5
-
 camlist = pygame.camera.list_cameras()
 if camlist:
     cam = pygame.camera.Camera(camlist[0], size)
@@ -81,8 +80,8 @@ while 1:
                 letter = font.render(character, True, green)
                 screen.blit(letter, (x*offset, y*offset))
             except:
-                # 1
-                print(x, y)
+                1
+                # print(x, y)
 
     pygame.display.flip()
 
