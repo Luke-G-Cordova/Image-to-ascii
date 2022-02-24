@@ -20,7 +20,10 @@ size = width, height = screen.get_width(), screen.get_height()
 # instantiating the used asciii characters and sorting them based on brightness
 # ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI^;,":`. '
 ascii = 'MDON+ov-:/.`    '
+<<<<<<< HEAD
 # ascii = '    `./:-vo+NODM'
+=======
+>>>>>>> 6088c4eb26a8610615aa67c0942137936b97dcd0
 ascii = sortByBrightness(ascii, screen)
 
 # setting initial values of some global variables
