@@ -1,4 +1,3 @@
-import sys, time
 import numpy as np
 import pygame
 from pygame.locals import *
@@ -25,24 +24,27 @@ def sortByBrightness(ascii, screen):
         holdArr.append((letter, calcBrightness(letter, screen)))
     bArr = np.array(holdArr, dtype=dtype)
     bArr = np.sort(bArr, order="brightness")
+    retStr = ''
     for tup in bArr:
-        print(tup[0])
-    return bArr
+        retStr += tup[0].decode("utf-8")
+    return retStr
 
-pygame.init()
+# pygame.init()
 
-screen = pygame.display.set_mode((500, 500))
-black = (0,0,0)
-white = (255,255,255)
-font = pygame.font.SysFont(None, 20)
-ascii = 'diso3-2;` '
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE: sys.exit()
+# screen = pygame.display.set_mode((500, 500))
+# black = (0,0,0)
+# white = (255,255,255)
+# font = pygame.font.SysFont(None, 20)
+# ascii = 'diso3-2;` M'
+# ascii = sortByBrightness(ascii, screen)
+# print(ascii)
+# while 1:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:sys.exit()
+#         if event.type == pygame.KEYDOWN:
+#             if event.key == pygame.K_ESCAPE: sys.exit()
 
-    time.sleep(1)
-    screen.fill(black)
-    print(sortByBrightness(ascii, screen))
-    pygame.display.flip()
+#     time.sleep(1)
+#     screen.fill(black)
+    
+#     pygame.display.flip()
