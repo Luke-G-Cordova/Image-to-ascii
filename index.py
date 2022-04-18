@@ -30,15 +30,7 @@ print(ascii)
 pixelSize = 10
 sizeWhole = int((width * height) / pixelSize)
 white = (255, 255, 255)
-green = (0, 255, 26)
-blue = (0, 0, 255)
-red = (255, 0, 0)
-yellow = (255, 255, 0)
-cyan = (0, 255, 255)
-purple = (255, 255, 0)
-
 black = (0, 0, 0)
-colors = [white, yellow, yellow, yellow, yellow, yellow, cyan, red, green, blue, purple]
 font = pygame.font.SysFont(None, pixelSize)
 offset = .7
 grow = False
