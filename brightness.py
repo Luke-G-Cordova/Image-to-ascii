@@ -2,7 +2,9 @@ import numpy as np
 import pygame
 from pygame.locals import *
 
-
+# calculates the brightness of a character
+# takes a string character and a screen to
+# be used to draw on too
 def calcBrightness(character, screen):
     font = pygame.font.SysFont(None, 20)
     letter = font.render(character, True, (255, 255, 255))
@@ -16,6 +18,10 @@ def calcBrightness(character, screen):
             avgB += avg
     avgB /= (20*20)
     return avgB
+
+
+# uses calcBrightness() to sort a string ascii
+# characters by brightness
 def sortByBrightness(ascii, screen):
     dtype = [('character', 'S10'), ('brightness', float)]
     holdArr = []
@@ -28,23 +34,3 @@ def sortByBrightness(ascii, screen):
     for tup in bArr:
         retStr += tup[0].decode("utf-8")
     return retStr
-
-# pygame.init()
-
-# screen = pygame.display.set_mode((500, 500))
-# black = (0,0,0)
-# white = (255,255,255)
-# font = pygame.font.SysFont(None, 20)
-# ascii = 'diso3-2;` M'
-# ascii = sortByBrightness(ascii, screen)
-# print(ascii)
-# while 1:
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:sys.exit()
-#         if event.type == pygame.KEYDOWN:
-#             if event.key == pygame.K_ESCAPE: sys.exit()
-
-#     time.sleep(1)
-#     screen.fill(black)
-    
-#     pygame.display.flip()

@@ -18,20 +18,29 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 size = width, height = screen.get_width(), screen.get_height()
 
 # instantiating the used asciii characters and sorting them based on brightness
-# ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI^;,":`. '
+# ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI^;,":`.       '
 ascii = 'MDON+ov-:/.`    '
-<<<<<<< HEAD
 # ascii = '    `./:-vo+NODM'
-=======
->>>>>>> 6088c4eb26a8610615aa67c0942137936b97dcd0
 ascii = sortByBrightness(ascii, screen)
+
+print(ascii)
+
 
 # setting initial values of some global variables
 pixelSize = 10
 sizeWhole = int((width * height) / pixelSize)
-colors = black, white, green = (0, 0, 0), (255, 255, 255), (0, 255, 26)
+white = (255, 255, 255)
+green = (0, 255, 26)
+blue = (0, 0, 255)
+red = (255, 0, 0)
+yellow = (255, 255, 0)
+cyan = (0, 255, 255)
+purple = (255, 255, 0)
+
+black = (0, 0, 0)
+colors = [white, yellow, yellow, yellow, yellow, yellow, cyan, red, green, blue,  purple]
 font = pygame.font.SysFont(None, pixelSize)
-offset = .5
+offset = .7
 grow = False
 shrink = False
 
@@ -97,7 +106,8 @@ while 1:
                 r += g + b
                 r /= 3
                 character = ascii[int(myMap(r, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
-                letter = font.render(character, True, white)
+                letter = font.render(character, True, colors[int(myMap(r, 0, 256, 0, len(colors)))])
+                # letter = font.render(character, True, white)
                 screen.blit(letter, (x*offset, y*offset))
             except:
                 # this try except is for some testing procedures
