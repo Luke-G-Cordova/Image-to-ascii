@@ -98,11 +98,12 @@ while 1:
         for y in range(0, height, pixelSize):
             try:
                 r, g, b, a = image.get_at((x, y))
-                r += g + b
-                r /= 3
-                character = ascii[int(myMap(r, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
+                bness = 0
+                bness += r + g + b
+                bness /= 3
+                character = ascii[int(myMap(bness, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
 
-                letter = font.render(character, True, getVibrantColorFromBrightness(r))
+                letter = font.render(character, True, (r, g, b))
 
                 # letter = font.render(character, True, white)
                 screen.blit(letter, (x*offset, y*offset))
