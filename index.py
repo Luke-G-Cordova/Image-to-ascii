@@ -95,7 +95,7 @@ while 1:
                 bness /= 3
                 character = ascii[int(myMap(bness, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
 
-                letter = font.render(character, True, (r, g, b))
+                letter = font.render(character, True, getVibrantColorFromBrightness(bness))
 
                 # letter = font.render(character, True, white)
                 screen.blit(letter, (x*offset, y*offset))

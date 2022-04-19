@@ -47,19 +47,20 @@ def getVibrantColorFromBrightness(brightness):
     col = myMap(brightness, 0, 255, 0, 1529)
     if col >= 0 and col < 255:
         col -= 0
-        return (col, 255, 0)
+        return (255, 0, col)
     elif col >= 255 and col < 510:
         col -= 255
-        return (0, 255, col)
+        return (255, col, 0)
     elif col >= 510 and col < 765:
         col -= 510
-        return (0, col, 255)
+        return (col, 255, 0)
     elif col >= 765 and col < 1020:
         col -= 765
-        return (col, 0, 255)
+        return (0, 255, col)
     elif col >= 1020 and col < 1275:
         col -= 1020
-        return (255, 0, col)
+        return (col, 0, 255)
     elif col >= 1275 and col < 1530:
         col -= 1275
-        return (255, col, 0)
+        return (0, col, 255)
+        
