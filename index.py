@@ -2,7 +2,7 @@ import sys
 import pygame
 import pygame.camera
 from pygame.locals import *
-from brightness import sortByBrightness
+from brightness import * #sortByBrightness
 
 pygame.init()
 pygame.camera.init()
@@ -30,15 +30,7 @@ print(ascii)
 pixelSize = 10
 sizeWhole = int((width * height) / pixelSize)
 white = (255, 255, 255)
-green = (0, 255, 26)
-blue = (0, 0, 255)
-red = (255, 0, 0)
-yellow = (255, 255, 0)
-cyan = (0, 255, 255)
-purple = (255, 255, 0)
-
 black = (0, 0, 0)
-colors = [white, yellow, yellow, yellow, yellow, yellow, cyan, red, green, blue,  purple]
 font = pygame.font.SysFont(None, pixelSize)
 offset = .7
 grow = False
@@ -53,12 +45,7 @@ image = cam.get_image()
 screen = pygame.display.set_mode((width * offset, height * offset))
 
 # myMap maps a number s in range a1-a2 to a range b1-b2
-def myMap(s, a1, a2, b1, b2):
-    ans = s-a1
-    ans *= b2-b1
 
-    ans /= a2-a1
-    return ans + b1
 
 # main loop
 while 1:
@@ -103,10 +90,13 @@ while 1:
         for y in range(0, height, pixelSize):
             try:
                 r, g, b, a = image.get_at((x, y))
-                r += g + b
-                r /= 3
-                character = ascii[int(myMap(r, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
-                letter = font.render(character, True, colors[int(myMap(r, 0, 256, 0, len(colors)))])
+                bness = 0
+                bness += r + g + b
+                bness /= 3
+                character = ascii[int(myMap(bness, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
+
+                letter = font.render(character, True, getVibrantColorFromBrightness(bness))
+
                 # letter = font.render(character, True, white)
                 screen.blit(letter, (x*offset, y*offset))
             except:
