@@ -31,7 +31,7 @@ if camSize[0] % 10 != 0 or camSize[1] % 10 != 0:
 
 font = pygame.font.SysFont(None, 25)
 
-ascii = 'Luke '#'MDN+o*-:.` '
+ascii = ' `*csXM' #' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*();:\'"[{]}/?.>,<`~\\|+=-_'#MDN+o*-:.` '
 ascii = sortByBrightness(ascii, screen)
 print(ascii)
 
@@ -42,11 +42,6 @@ def myMap(s, a1, a2, b1, b2):
   ans /= a2-a1
   return ans + b1
 
-def kill():
-  # f = open('video.json', 'w')
-  # f.write(json.dumps(video))
-  # f.close()
-  sys.exit()
 
 
 def greyscale(surface: pygame.Surface):
@@ -66,6 +61,13 @@ def greyscale(surface: pygame.Surface):
 # greyscale(image)
 # sys.exit()
 
+video = []
+def kill():
+  f = open('video.json', 'w')
+  f.write(json.dumps(video))
+  f.close()
+  sys.exit()
+
 a = np.array([])
 
 while 1:
@@ -84,9 +86,12 @@ while 1:
     image = greyscale(image)
     screen.blit(image, (0, camSize[1]))
         
+
+    frameData = []
     # show the final image
     screen.fill((0, 0, 0), (camSize[0], 0, camSize[0]*2, camSize[1]))
     for x in range(0, camSize[0], 10):
+      frameData.append([])
       for y in range(0, camSize[1], 10):
         # get the pixel at the current x and y
         pixel = image.get_at((x, y))
@@ -98,14 +103,16 @@ while 1:
           a = np.append(a, brightness)
           print("brightness: " , brightness, " : ", round(brightness/(255/(len(ascii)-1))))
 
+        character = ascii[round(brightness/(255/(len(ascii)-1)))]
+        frameData[len(frameData) -1].append(character)
         # get the letter that corresponds to the brightness level
-        letter = font.render(ascii[round(brightness/(255/(len(ascii)-1)))], True, (255, 255, 255))
+        letter = font.render(character, True, (255, 255, 255))
 
         # draw the letter on the screen
         screen.blit(letter, ( x+camSize[0], y ))
         
 
-
+    video.append(frameData)
 
 
 
