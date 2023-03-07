@@ -1,14 +1,13 @@
 import sys
 import pygame
 import pygame.camera
+import json
 from pygame.locals import *
 from brightness import * #sortByBrightness
 
 pygame.init()
 pygame.camera.init()
 
-# move this to the top to exit the program before
-# carying out other computations if no camera is found
 camlist = pygame.camera.list_cameras()
 if not camlist:
     print('no camera found')
@@ -16,6 +15,10 @@ if not camlist:
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 size = width, height = screen.get_width(), screen.get_height()
+
+# initializing the camera
+cam = pygame.camera.Camera(camlist[0], size)
+cam.start()
 
 # instantiating the used asciii characters and sorting them based on brightness
 # ascii = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{[]?-_+~<>i!lI^;,":`.       '
@@ -25,37 +28,39 @@ ascii = sortByBrightness(ascii, screen)
 
 print(ascii)
 
-
 # setting initial values of some global variables
-pixelSize = 10
-sizeWhole = int((width * height) / pixelSize)
+pixelSize = 20
 white = (255, 255, 255)
 black = (0, 0, 0)
 font = pygame.font.SysFont(None, pixelSize)
-offset = .7
+offset = .6 
 grow = False
 shrink = False
 
-# initializing the camera
-cam = pygame.camera.Camera(camlist[0], size)
-cam.start()
+# resetting the screen to the needed size based off of the offset of each character
+if offset != 1:
+    width = int(width * offset)
+    height = int(width * offset)
+    # size = width, height
+    screen = pygame.display.set_mode((width, height))
+    
 image = cam.get_image()
 
-# resetting the screen to the needed size based off of the offset of each character
-screen = pygame.display.set_mode((width * offset, height * offset))
-
-# myMap maps a number s in range a1-a2 to a range b1-b2
-
+video = []
+def kill():
+    f = open('video.json', 'w')
+    f.write(json.dumps(video))
+    f.close()
+    sys.exit()
 
 # main loop
 while 1:
     for event in pygame.event.get():
         # handle exiting the program
-        if event.type == pygame.QUIT: sys.exit()
+        if event.type == pygame.QUIT: kill()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:sys.exit()
-
-            # handle key inputs for growing and shrinking characters
+            if event.key == pygame.K_ESCAPE:kill()
+                
             if event.key == pygame.K_LEFT:
                 shrink = True
                 grow = False
@@ -67,45 +72,39 @@ while 1:
                 shrink = False
             elif event.key == pygame.K_RIGHT:
                 grow = False
-                
-    # handle growing and shrinking characters depending on keyboard inputs
-    if grow and pixelSize < 150:
-        pixelSize += 1
-        sizeWhole = int((width * height) / pixelSize)
-        font = pygame.font.SysFont(None, pixelSize)
-    elif shrink and pixelSize > 10:
-        pixelSize -= 1
-        sizeWhole = int((width * height) / pixelSize)
-        font = pygame.font.SysFont(None, pixelSize)
-
     # get a new image from the camera
     if cam.query_image():
         image = cam.get_image(image)
 
+    if grow and pixelSize < 150:
+        pixelSize += 1
+        font = pygame.font.SysFont(None, pixelSize)
+    elif shrink and pixelSize > 10:
+        pixelSize -= 1
+        font = pygame.font.SysFont(None, pixelSize)
+
+
     # fill the screen black
     screen.fill(black)
     
+    frameData = []
     # add characters based on brightness of every pixelSize pixel in image
     for x in range(0, width, pixelSize):
+        frameData.append([])
         for y in range(0, height, pixelSize):
-            try:
-                r, g, b, a = image.get_at((x, y))
-                bness = 0
-                bness += r + g + b
-                bness /= 3
-                character = ascii[int(myMap(bness, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
+            r, g, b, a = image.get_at((x, y))
+            bness = 0
+            bness += r + g + b
+            bness /= 3
+            frameData[len(frameData)-1].append(bness)
+            character = ascii[int(myMap(bness, 0, 256, 0, len(ascii)))] #len(ascii) - 1 - 
 
-                letter = font.render(character, True, getVibrantColorFromBrightness(bness))
+            letter = font.render(character, True, white)
 
-                # letter = font.render(character, True, white)
-                screen.blit(letter, (x*offset, y*offset))
-            except:
-                # this try except is for some testing procedures
-                # for some reason on different devices pygame will create
-                # a bigger display box than needed causing the program
-                # to error when there it goes outside the images pixels
-                1
-                # print(x, y)
+            # letter = font.render(character, True, white)
+            screen.blit(letter, (x*offset, y*offset))
+
+    video.append(frameData)
 
     pygame.display.flip()
 
