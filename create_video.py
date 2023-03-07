@@ -31,7 +31,7 @@ if camSize[0] % 10 != 0 or camSize[1] % 10 != 0:
 
 font = pygame.font.SysFont(None, 25)
 
-ascii = 'MDON+o*-:/.` '
+ascii = 'Luke '#'MDN+o*-:.` '
 ascii = sortByBrightness(ascii, screen)
 print(ascii)
 
@@ -66,6 +66,8 @@ def greyscale(surface: pygame.Surface):
 # greyscale(image)
 # sys.exit()
 
+a = np.array([])
+
 while 1:
   for event in pygame.event.get():
     # handle exiting the program
@@ -78,11 +80,11 @@ while 1:
     # show the original camera input on one side
     screen.blit(image, (0, 0))
 
-
+    # show the image used for filtering brightnesses
     image = greyscale(image)
     screen.blit(image, (0, camSize[1]))
         
-    # show the processed image on the other side
+    # show the final image
     screen.fill((0, 0, 0), (camSize[0], 0, camSize[0]*2, camSize[1]))
     for x in range(0, camSize[0], 10):
       for y in range(0, camSize[1], 10):
@@ -91,13 +93,15 @@ while 1:
         # get the brightness of the pixel
         brightness = pixel[0] + pixel[1] + pixel[2]
         brightness /= 3
-        # if the pixel is bright enough, draw a white pixel
-        if brightness > 0:
-          letter = font.render(ascii[int((255 - brightness) / brightness)-1], True, (255, 255, 255))
-        else:
-          letter = font.render(ascii[0], True, (255, 255, 255))
 
+        if brightness not in a:
+          a = np.append(a, brightness)
+          print("brightness: " , brightness, " : ", round(brightness/(255/(len(ascii)-1))))
 
+        # get the letter that corresponds to the brightness level
+        letter = font.render(ascii[round(brightness/(255/(len(ascii)-1)))], True, (255, 255, 255))
+
+        # draw the letter on the screen
         screen.blit(letter, ( x+camSize[0], y ))
         
 
